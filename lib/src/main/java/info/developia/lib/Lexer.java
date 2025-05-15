@@ -15,19 +15,19 @@ public class Lexer {
     }
 
     public List<Token> tokenize() {
-        List<Token> tokens = new ArrayList<>();
+        var tokens = new ArrayList<Token>();
         while (pos < length) {
-            char current = peek();
+            var current = peek();
             if (Character.isWhitespace(current)) {
                 advance();
             } else if (Character.isLetter(current)) {
                 var word = readWhile(Character::isLetterOrDigit);
-                switch (word.toUpperCase()) {
-                    case "SELECT" -> tokens.add(new Token(TokenType.SELECT, word));
-                    case "FROM" -> tokens.add(new Token(TokenType.FROM, word));
-                    case "WHERE" -> tokens.add(new Token(TokenType.WHERE, word));
-                    default -> tokens.add(new Token(TokenType.IDENTIFIER, word));
-                }
+                tokens.add(switch (word.toUpperCase()) {
+                    case "SELECT" -> new Token(TokenType.SELECT, word);
+                    case "FROM" -> new Token(TokenType.FROM, word);
+                    case "WHERE" -> new Token(TokenType.WHERE, word);
+                    default -> new Token(TokenType.IDENTIFIER, word);
+                });
             } else if (current == '{') {
                 tokens.add(new Token(TokenType.BRACKET_OPEN, "{"));
                 advance();
@@ -48,7 +48,7 @@ public class Lexer {
                 advance();
             } else if (current == '\'') {
                 advance();
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 while (peek() != '\'' && pos < length) {
                     sb.append(peek());
                     advance();
@@ -72,7 +72,7 @@ public class Lexer {
     }
 
     private String readWhile(Predicate<Character> condition) {
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         while (pos < length && condition.test(input.charAt(pos))) {
             sb.append(input.charAt(pos));
             pos++;
