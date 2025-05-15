@@ -48,7 +48,7 @@ public class Lexer {
                 advance();
             } else if (current == '\'') {
                 advance();
-                var sb = new StringBuilder();
+                StringBuilder sb = new StringBuilder();
                 while (peek() != '\'' && pos < length) {
                     sb.append(peek());
                     advance();
@@ -72,7 +72,7 @@ public class Lexer {
     }
 
     private String readWhile(Predicate<Character> condition) {
-        var sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         while (pos < length && condition.test(input.charAt(pos))) {
             sb.append(input.charAt(pos));
             pos++;
