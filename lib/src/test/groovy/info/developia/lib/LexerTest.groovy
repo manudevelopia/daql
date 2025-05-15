@@ -7,7 +7,7 @@ class LexerTest extends Specification {
     def "should recognize"() {
         given:
         String query = """
-            users {
+            select users {
                 id
                 name = 'John'
             }"""
@@ -15,18 +15,20 @@ class LexerTest extends Specification {
         when:
         List<Token> tokens = lexer.tokenize()
         then:
-        tokens.size() == 8
-        tokens[0].type == TokenType.IDENTIFIER
-        tokens[0].value == "users"
-        tokens[1].type == TokenType.BRACKET_OPEN
-        tokens[2].type == TokenType.IDENTIFIER
-        tokens[2].value == "id"
+        tokens.size() == 9
+        tokens[0].type == TokenType.SELECT
+        tokens[0].value == "select"
+        tokens[1].type == TokenType.IDENTIFIER
+        tokens[1].value == "users"
+        tokens[2].type == TokenType.BRACKET_OPEN
         tokens[3].type == TokenType.IDENTIFIER
-        tokens[3].value == "name"
-        tokens[4].type == TokenType.EQUALS
-        tokens[5].type == TokenType.VALUE_STRING
-        tokens[5].value == "John"
-        tokens[6].type == TokenType.BRACKET_CLOSE
-        tokens[7].type == TokenType.EOF
+        tokens[3].value == "id"
+        tokens[4].type == TokenType.IDENTIFIER
+        tokens[4].value == "name"
+        tokens[5].type == TokenType.EQUALS
+        tokens[6].type == TokenType.VALUE_STRING
+        tokens[6].value == "John"
+        tokens[7].type == TokenType.BRACKET_CLOSE
+        tokens[8].type == TokenType.EOF
     }
 }
