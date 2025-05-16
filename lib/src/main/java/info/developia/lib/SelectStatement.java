@@ -2,7 +2,7 @@ package info.developia.lib;
 
 import java.util.List;
 
-public class SelectStatement {
+public class SelectStatement implements Statement {
     public final String table;
     public final List<String> columns;
 
@@ -11,7 +11,7 @@ public class SelectStatement {
         this.table = table;
     }
 
-    public String toString() {
+    public String asSql() {
         return "SELECT " + String.join(", ", columns) + " FROM " + table;
     }
 }

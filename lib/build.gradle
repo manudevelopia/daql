@@ -1,7 +1,11 @@
 plugins {
-    id 'groovy'
     id 'java-library'
+    id 'maven-publish'
+    id 'groovy'
 }
+
+group 'info.developia.lib'
+version '1.0.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -22,4 +26,12 @@ java {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
 }
